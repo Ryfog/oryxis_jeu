@@ -3,8 +3,9 @@
    En jeu (FiveM) le lancer est decide par le SERVEUR (autorite + webhook).
    Dans le navigateur (apercu) tout tourne en local. */
 
-const BROWSER = location.protocol === 'file:';
-const FREE = location.search.includes('free');   // apercu : autorise les lancers en boucle (test)
+/* "navigateur" = hors FiveM (les globals cfx GetParentResourceName/invokeNative n'existent pas) */
+const BROWSER = (typeof window.GetParentResourceName === 'undefined') && (typeof window.invokeNative === 'undefined');
+const FREE = location.search.includes('free');   // navigateur : autorise les lancers en boucle
 
 /* cooldown 1/jour simule en navigateur (en jeu c'est le serveur qui gere) */
 function browserRolledToday() { return localStorage.getItem('oryxis_lastRollDay') === new Date().toDateString(); }
@@ -360,4 +361,6 @@ window.addEventListener('message', (ev) => {
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
 init();
-if (location.search.includes('preview')) open();
+// hors FiveM (page web / apercu) : on affiche directement le jeu
+if (BROWSER && !location.search.includes('admin') && !location.search.includes('edit')) open();
+else if (location.search.includes('preview')) open();
