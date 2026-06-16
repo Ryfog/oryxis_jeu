@@ -139,7 +139,8 @@ async function requestRoll() {
 }
 
 async function roll() {
-  if (state.rolling || !state.canRoll) return;
+  if (state.rolling) return;
+  if (!state.canRoll) { setStatus("LE DÉ A DÉJÀ ÉTÉ LANCÉ AUJOURD'HUI."); return; }
   state.rolling = true;
   $('#rollBtn').classList.add('busy');
   hideCard();
