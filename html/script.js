@@ -327,7 +327,6 @@ function init() {
   if (q.includes('admin')) openAdmin();
   if (q.includes('hot')) { $('#rollBtn').style.background = 'rgba(255,0,0,.35)'; $('#rollBtn').style.outline = '2px solid red'; }
   if (q.includes('showcard')) showCard({ type: 'defi', title: 'LE GARDIEN', effect: "TUE UN PNJ DANS L'HEURE." });
-  if (BROWSER) $('#welcomeName').textContent = 'Spiker';   // apercu
 }
 
 /* ---------- affichage / FiveM ---------- */
@@ -347,7 +346,6 @@ window.addEventListener('message', (ev) => {
       state.pos = d.state.pos || 0;
       state.nbCases = d.state.nbCases || state.nbCases;
       state.canRoll = d.state.canRoll !== false && d.state.hasItem !== false;
-      if (d.state.name) $('#welcomeName').textContent = d.state.name;
       placePawn();
     }
     open();
