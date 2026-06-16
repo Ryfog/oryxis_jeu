@@ -74,6 +74,26 @@ local function hasItem(src)
     return ok and type(count) == 'number' and count > 0
 end
 
+-- itemcreator "Evenement personnalise" en mode SERVEUR -> oryxis_jeu:openServer (relais vers le client)
+RegisterNetEvent('oryxis_jeu:openServer', function()
+    local src = source
+    if src and src > 0 then TriggerClientEvent('oryxis_jeu:open', src) end
+end)
+
+-- usable item ESX (au cas ou ton systeme passe par la) : utiliser l'item "oryxis" ouvre le jeu
+CreateThread(function()
+    if GetResourceState('es_extended') == 'started' then
+        local ESX = exports['es_extended']:getSharedObject()
+        if ESX and ESX.RegisterUsableItem then
+            pcall(function()
+                ESX.RegisterUsableItem(Config.ItemName, function(src)
+                    TriggerClientEvent('oryxis_jeu:open', src)
+                end)
+            end)
+        end
+    end
+end)
+
 -- tire une carte de defi (au centre, le jeu ne finit jamais : que des defis)
 local function pickDefi()
     local defis = {}

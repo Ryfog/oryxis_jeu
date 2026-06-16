@@ -17,7 +17,7 @@ Config.OneRollPerDay = true
 
 -- Exiger que le joueur possede l'item pour lancer (relocalisation manuelle par le staff).
 Config.RequireItem = true
-Config.ItemName    = 'oryxis_jeu'
+Config.ItemName    = 'oryxis'
 
 -- Permission staff pour l'editeur de cartes (/oryxiscarte ...)
 Config.AdminAce = 'oryxis.admin'

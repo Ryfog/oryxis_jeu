@@ -21,6 +21,7 @@ end
 -- ouverture par la commande (test) et par l'item ox_inventory
 RegisterCommand('oryxis', openUI, false)
 exports('openGame', openUI)   -- ox_inventory : client = { export = 'oryxis_jeu.openGame' }
+RegisterNetEvent('oryxis_jeu:open', openUI)   -- itemcreator "Evenement personnalise" (event CLIENT) -> oryxis_jeu:open
 
 -- le NUI demande un lancer -> on relaie au serveur (autorite) et on renvoie le resultat
 RegisterNUICallback('roll', function(_, cb)
