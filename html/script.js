@@ -239,11 +239,7 @@ function openAdmin(cards, next) {
   $('#admin').classList.add('on');
   resetForm(); renderAdmin();
 }
-function closeAdmin() {
-  $('#admin').classList.remove('on');
-  if (BROWSER) screen.classList.add('hidden');
-  else { try { fetch(`https://${res()}/close`, { method: 'POST', body: '{}' }); } catch (e) {} }
-}
+function closeAdmin() { close(); }   // fermeture complete du NUI (cache l'ecran + relache le focus)
 function renderAdmin() {
   const list = $('#admList'); list.innerHTML = '';
   deck.forEach((c, i) => {
