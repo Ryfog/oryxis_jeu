@@ -1,0 +1,12 @@
+# captures / outils de dev (ne pas publier)
+crop*.html
+crop*.png
+preview*.png
+check*.png
+board2.png
+v2_*.png
+admin.png
+path_check.png
+final_*.png
+intro*.png
+*.output

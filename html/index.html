@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORYXIS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="screen" class="hidden">
+
+    <!-- ===================== ÉCRAN D'ACCUEIL "REPRENDRE LA PARTIE" ===================== -->
+    <div id="intro">
+      <div class="intro-bg"></div>
+      <div class="intro-vignette"></div>
+      <div class="intro-content">
+        <div class="intro-kicker">— LE JEU D'—</div>
+        <h1 class="intro-title">ORYXIS</h1>
+        <p class="intro-welcome">Bienvenue, <span id="welcomeName">Aventurier</span></p>
+        <p class="intro-line">La partie a commencé il y a bien longtemps.</p>
+        <p class="intro-sub">Reprenez votre partie… si vous l'osez.</p>
+        <button id="resumeBtn">REPRENDRE LA PARTIE</button>
+        <div class="intro-note">Un seul lancer par jour — où qu'il se cache.</div>
+      </div>
+    </div>
+
+    <!-- ===================== PLATEAU ===================== -->
+    <div id="game">
+      <img id="board" src="board.png" alt="">
+
+      <!-- DÉ unique -->
+      <div id="dice">
+        <div class="die" id="die1" data-val="3"></div>
+      </div>
+
+      <!-- bouton lancer -->
+      <button id="rollBtn" title="Lancer le dé"></button>
+
+      <!-- carte unique (vrai style de carte, recto/verso) -->
+      <div id="card">
+        <div class="card-inner">
+          <div class="card-face card-back">
+            <div class="cb-emblem">&#10047;</div>
+            <div class="cb-label">ORYXIS</div>
+          </div>
+          <div class="card-face card-front">
+            <div class="cf-banner" id="cardBanner">DÉFI</div>
+            <div class="cf-title" id="cardTitle"></div>
+            <div class="cf-effect" id="cardEffect"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- pion actif (le seul qui joue) -->
+      <div id="pawns">
+        <div class="pawn active" id="pawn"></div>
+      </div>
+
+      <!-- repères de cases (debug ?debug / edit ?edit) -->
+      <div id="pathDebug"></div>
+      <svg id="edLine" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+
+      <!-- barre de statut -->
+      <div id="status"></div>
+    </div>
+
+    <!-- ===================== ÉDITEUR DE CHEMIN (?edit) ===================== -->
+    <div id="editor">
+      <div class="ed-h">ÉDITEUR DE CHEMIN</div>
+      <div class="ed-help">Clique les cases <b>dans l'ordre</b> (départ → centre) le long du ruban.</div>
+      <div class="ed-row"><span id="edCount">0</span> point(s)
+        <button id="edUndo">↩ Annuler</button>
+        <button id="edClear">✕ Effacer</button>
+        <button id="edCopy">⧉ Copier</button>
+      </div>
+      <textarea id="edOut" readonly placeholder="[ ... ]"></textarea>
+      <div class="ed-help">Puis colle-moi le contenu dans le chat.</div>
+    </div>
+
+    <!-- ===================== VERSION STAFF — GESTION DES DÉFIS ===================== -->
+    <div id="admin">
+      <div class="adm-bg"></div>
+      <div class="adm-wrap">
+        <div class="adm-head">
+          <div class="adm-title">ORYXIS · MAÎTRE DU JEU</div>
+          <button id="admClose">✕ Fermer</button>
+        </div>
+        <div class="adm-body">
+          <div class="adm-col adm-list-col">
+            <div class="adm-sub">Cartes du jeu — <span id="admCount">0</span></div>
+            <div id="admList"></div>
+          </div>
+          <div class="adm-col adm-form-col">
+            <div class="adm-sub" id="fHead">Nouvelle carte</div>
+            <label class="adm-f">Type
+              <select id="fType">
+                <option value="defi">Défi (obligatoire)</option>
+                <option value="event">Événement</option>
+              </select>
+            </label>
+            <label class="adm-f">Titre
+              <input id="fTitle" maxlength="44" placeholder="LE GARDIEN">
+            </label>
+            <label class="adm-f">Consigne / effet
+              <textarea id="fEffect" maxlength="140" placeholder="TUE UN PNJ DANS L'HEURE."></textarea>
+            </label>
+            <label class="adm-f">Déplacement du pion (cases)
+              <input id="fMove" type="number" value="0" min="-20" max="20">
+            </label>
+            <div class="adm-f-btns">
+              <button id="fSave" class="prim">Ajouter</button>
+              <button id="fNew">Vider</button>
+            </div>
+
+            <div class="adm-sub" style="margin-top:14px">Forcer la prochaine carte</div>
+            <select id="admNext"><option value="-1">— Aléatoire (normal) —</option></select>
+            <div class="adm-help">Le prochain joueur qui lance tombera sur cette carte, puis ça repasse en aléatoire.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
