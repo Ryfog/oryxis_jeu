@@ -3,8 +3,9 @@
    En jeu (FiveM) le lancer est decide par le SERVEUR (autorite + webhook).
    Dans le navigateur (apercu) tout tourne en local. */
 
-/* "navigateur" = hors FiveM (les globals cfx GetParentResourceName/invokeNative n'existent pas) */
-const BROWSER = (typeof window.GetParentResourceName === 'undefined') && (typeof window.invokeNative === 'undefined');
+/* "navigateur" = tout sauf la VRAIE resource FiveM (servie sur https://cfx-nui-<resource>/).
+   Page web / iframe externe / fichier local => on joue en local et on s'affiche tout seul. */
+const BROWSER = !String(location.host).startsWith('cfx-nui-');
 const FREE = location.search.includes('free');   // navigateur : autorise les lancers en boucle
 
 /* cooldown 1/jour simule en navigateur (en jeu c'est le serveur qui gere) */
