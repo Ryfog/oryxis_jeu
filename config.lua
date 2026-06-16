@@ -19,8 +19,10 @@ Config.OneRollPerDay = true
 Config.RequireItem = true
 Config.ItemName    = 'oryxis'
 
--- Permission staff pour l'editeur de cartes (/oryxiscarte ...)
+-- Permission staff pour la version Maitre du jeu (/oryxisadmin, /oryxiscarte ...)
 Config.AdminAce = 'oryxis.admin'
+-- Fallback : groupes ESX consideres comme staff (plus fiable que l'ace sur ESX)
+Config.AdminGroups = { 'owner', 'superadmin', 'admin', 'mod', '_dev' }
 
 -- ====== CARTES PAR DEFAUT ======
 -- L'admin en ajoute/retire en jeu via /oryxiscarte ; elles sont stockees en KVP (persistant).

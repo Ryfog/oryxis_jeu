@@ -7,6 +7,7 @@ local lastRollDay  = ''
 local lastRoller   = ''
 local cards        = {}
 local forcedNext   = -1   -- index (0-based, cote NUI) de la carte forcee par le staff (-1 = aleatoire)
+local ESX                  -- objet ESX (pour la verif de groupe staff)
 
 local function today() return os.date('%Y-%m-%d') end
 
@@ -34,7 +35,12 @@ local function load()
 end
 
 AddEventHandler('onResourceStart', function(res)
-    if res == GetCurrentResourceName() then math.randomseed(os.time()); load() end
+    if res == GetCurrentResourceName() then
+        math.randomseed(os.time()); load()
+        if GetResourceState('es_extended') == 'started' then
+            pcall(function() ESX = exports['es_extended']:getSharedObject() end)
+        end
+    end
 end)
 
 -- ---------- webhook Discord ----------
@@ -154,7 +160,19 @@ lib.callback.register('oryxis:roll', function(src)
 end)
 
 -- ---------- version staff : callbacks admin (securises par ACE) ----------
-local function isAdmin(src) return src == 0 or IsPlayerAceAllowed(src, Config.AdminAce) end
+local function isAdmin(src)
+    if src == 0 then return true end
+    if IsPlayerAceAllowed(src, Config.AdminAce) then return true end
+    -- fallback ESX : groupe du joueur dans Config.AdminGroups
+    if ESX then
+        local xp = ESX.GetPlayerFromId(src)
+        if xp and xp.getGroup then
+            local g = xp.getGroup()
+            for _, ag in ipairs(Config.AdminGroups or {}) do if g == ag then return true end end
+        end
+    end
+    return false
+end
 
 lib.callback.register('oryxis:admin:get', function(src)
     if not isAdmin(src) then return { ok = false } end
